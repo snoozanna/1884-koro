@@ -1,0 +1,271 @@
+:: StoryTitle
+1884 Memorial | Read | Koro
+
+
+:: StoryData
+{
+	 "ifid": "CC64CC2C-89E8-46F0-903B-9A1C1A090107",
+	"format": "SugarCube",
+	"format-version": "2.36.1",
+	"start": "Start",
+	"zoom": 0.6
+}
+
+
+:: Story Stylesheet [stylesheet]
+
+@import url("../styles/generics.css");
+@import url("../styles/main.css");
+@import url("../games/styles/twine.css");
+
+
+
+:: Story JavaScript [script]
+$('#ui-bar').remove();
+$(document.head).find('#style-ui-bar').remove();
+
+
+
+
+
+:: StoryInit {"position":"100,100","size":"100,100"}
+
+
+:: Start [nobr t8n-dissolve]
+<<set $showCaptionsIcon to false>>
+<<set $showAudioIcon to false>>
+<<set $showBackwards to true>>
+<<set $showMenu to true>>
+<<set $menuOpen to false>>
+<<set $prevpass to "Start">>
+<<set $passage to "Start">>
+<<set $nextpass to "read">>
+<<set $readoptions to ["read1", "read2", "read3"]>>
+   <<set $readoptionscopy to $readoptions>>
+
+<header/>
+<main class="main-section text read " id="main">
+
+<<button "Start">>
+   <<if $readoptionscopy.length > 0>>
+    <<set $readsource to $readoptionscopy.splice(random(0, $readoptionscopy.length - 1), 1)[0]>>
+     <<goto "read">>
+<</if>>
+<</button>> 
+</main>
+<footer></footer>
+
+
+:: footer [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+<<if $showBackwards is true>>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Back|../assets/img/back.png][$prevpass]]
+    </div>
+  </div>
+  <</if>>
+  
+
+  
+</footer>
+
+
+
+:: menu [nobr t8n]
+<<set $showLogo to true>>
+ <<set $menuOpen to true>>
+
+<div id="menu">
+<div class="nav-wrapper menu-header">
+    <div class="nav-item">
+        <<link [img[../assets/img/crossRed.png]]>>
+          <<if $menuOpen is false >>
+
+            <<set $menuOpen to true>>
+            <<append "#main">>
+               <<include "menu">>
+              <</append>>
+           
+          <<elseif $menuOpen is true>>
+             <<set $menuOpen to false>>
+               <<remove "#menu">>
+          <</if>>
+            
+          <</link>>
+
+    </div>
+  </div>
+  <h2 class="menu-title"> MENU </h2> 
+<h3 class="menu-item"><a href="../games/index.html">Games</a></h3>
+<h3 class="menu-item"><<link "Memorial">>
+      <<goto "Start">>
+    <</link>></h3>
+    <ul>
+     <li><a href="../memorial/listen.html">Listen</a></li>
+    <li> <<link "Read">>
+      <<goto "read">>
+    <</link>></li>
+    <li><a href="../memorial/prerecord.html">Record</a></li>
+    <li><a href="../memorial/submit.html">Submit a written contribution</a></li>
+    </ul>
+<h3 class="menu-item"><a href="../history/index.html">Resources</a></h3>
+  <h3 class="menu-item"><a href="../about.html">About</a></h3>
+  <br/>
+<<button "Close Menu">>
+ <<set $menuOpen to false>>
+<<remove "#menu">>
+<</button>>
+</div>
+
+:: headermenu [nobr]
+<header class="general menu" >
+<<if $showMenu is true>>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        <<link [img[../assets/img/menu.png]]>>
+          <<if $menuOpen is false >>
+
+            <<set $menuOpen to true>>
+            <<append "#main">>
+               <<include "menu">>
+              <</append>>
+           
+          <<elseif $menuOpen is true>>
+             <<set $menuOpen to false>>
+               <<remove "#menu">>
+          <</if>>
+            
+          <</link>>
+
+    </div>
+  </div>
+  <</if>>
+</header>
+
+
+
+:: footerread [nobr]
+
+<footer>
+
+<div class="nav-item alone">
+      <a href="../about.html"><button>Leave</button></a>
+ </div>
+ /* <div class="nav-item read-title">
+<h2>READ</h2>
+</div> */
+<div class="nav-item">
+    <<button "Next memory">>
+   <<if $readoptionscopy.length > 0>>
+    <<set $readsource to $readoptionscopy.splice(random(0, $readoptionscopy.length - 1), 1)[0]>>
+            <<goto $passage>>
+<<else>>
+  <<replace "#main">>
+  <div id="endMsgMount"> <<button "Read again?">>
+    <<replace "#endMsgMount">>
+     <<set $readoptionscopy to $readoptions>>
+    <<goto "read">><</replace>>
+    <</button>></div>
+   
+    <</replace>>
+
+<</if>>
+<</button>>
+ </div>
+
+</footer>
+
+<<done>>
+  <<if $captions is true>>
+    <<addclass "#capIconContainer" "activeIcon">>
+  <</if>>
+  <<if $sound is true>>
+   /* <<addclass "#audioContainer" "activeIcon">> */
+  <</if>>
+<</done>>
+
+:: headerread [nobr]
+<header class="listen" >
+
+ <div class="nav-item">
+    <a href="submit.html"><button>Submit a written memory</button></a>
+ </div>
+ <div class="nav-item">
+    <<button "Next memory">>
+   <<if $audiooptionscopy.length > 0>>
+    <<set $readsource to $audiooptionscopy.splice(random(0, $audiooptionscopy.length - 1), 1)[0]>>
+            <<goto $passage>>
+<<else>>
+  <<replace "#main">>
+  <div id="endMsgMount"> <<button "Listen again?">>
+    <<replace "#endMsgMount">>
+     <<set $audiooptionscopy to $audiooptions>>
+    <<goto "read">><</replace>>
+    <</button>></div>
+   
+    <</replace>>
+
+<</if>>
+<</button>>
+ </div>
+</header>
+
+:: read [nobr t8n.typewriter.4 t8n-dissolve]
+<<set $showCaptionsIcon to false>>
+<<set $showAudioIcon to false>>
+<<set $showBackwards to true>>
+<<set $showMenu to true>>
+<<set $menuOpen to false>>
+<<set $prevpass to "Start">>
+<<set $passage to "read">>
+
+ 
+
+/* <<include "headerread">> */
+<<include "headermenu">>
+
+<div class="main-container read">
+  <main class="main-section text read " id="main">
+  
+  <div class="read-wrapper"><<include $readsource>></div>
+  
+  
+  </main>
+</div>
+<<include "footerread">>
+
+
+
+
+:: transcripts
+<<goto "read">>
+
+<<include "footer">>
+
+
+:: read1[nobr]
+<br/>
+<p>I didn’t immediately see the connection between 1884 and the exercises but when it hit, it was extraordinary.</p> 
+
+<p>The commitment that the newly formed groups had to the choices made about traditions, identifiers etc was much deeper than you might expect. The parallels with colonisation became starker with each declaration. The instinct to protest, while powerless and grappling with injustice just resonated. Some capitulated for a quiet life, or saw the change as an opportunity. </p>
+
+<p>Who’s to say what we would do if people close to us are threatened. We assume the state protects us. But increasingly we cannot believe that. There is a message for our own lives - here and now. The ease with which we slide into totalitarianism. A powerful experience.</p>
+
+
+:: read2[nobr]
+<br/>
+<p>The more things change, the more they stay the same. 1884 had me thinking a lot on the way home about the self-perpetuating hegemony of colonialism - how colonisers grasp and steal and then justify themselves, both in the moment and generations after they've torn the land apart. </p>
+
+<p>All this in a show that allows the audience to push back and rise up, building alliances with the audience around us. I think it's fantastic.</p>
+
+
+
+:: read3[nobr]
+
+<p>1884 is an important piece of theatre allowing us to learn about the Berlin Conference and its impact on the continent of Africa which continues to impact its people, cultures and communities.</p>
+
+<p>I could relate it to current conflicts around the world including Ukraine and Gaza. which makes me feel sad that nothing has really changed for ordinary people living in communities experiencing war and conflict. </p> 
+
+
+

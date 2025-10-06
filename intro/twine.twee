@@ -1,0 +1,480 @@
+:: StoryTitle
+1884 Experience | Intro | Koro
+
+
+:: StoryData
+{
+	"ifid": "F8961591-7F82-4BF1-9EB5-737ECE7DE1CA",
+	"format": "SugarCube",
+	"format-version": "2.36.1",
+	"start": "intro",
+	"zoom": 0.6
+}
+
+
+:: Story Stylesheet [stylesheet]
+
+@import url("../styles/generics.css");
+@import url("../styles/main.css");
+@import url("../games/styles/twine.css");
+
+
+
+:: Story JavaScript [script]
+$('#ui-bar').remove();
+$(document.head).find('#style-ui-bar').remove();
+
+
+
+
+
+
+:: StoryInit {"position":"100,100","size":"100,100"}
+
+:: header [nobr]
+<header class="general" >
+<<if $showLogo is true>>
+<div class="logo-container"><img src="../assets/img/1884components-23.png"/></div>
+ <div class="nav-item">
+ </div>
+  <</if>>
+<<if $showMenu is true>>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        <<link [img[../assets/img/menu.png]]>>
+          <<if $menuOpen is false >>
+
+            <<set $menuOpen to true>>
+            <<append "#main">>
+               <<include "menu">>
+              <</append>>
+           
+          <<elseif $menuOpen is true>>
+             <<set $menuOpen to false>>
+               <<remove "#menu">>
+          <</if>>
+            
+          <</link>>
+
+    </div>
+  </div>
+  <</if>>
+</header>
+
+
+:: menu [nobr t8n]
+<<set $showLogo to true>>
+ <<set $menuOpen to true>>
+
+<div id="menu">
+<div class="nav-wrapper menu-header">
+    <div class="nav-item">
+        <<link [img[../assets/img/crossRed.png]]>>
+          <<if $menuOpen is false >>
+
+            <<set $menuOpen to true>>
+            <<append "#main">>
+               <<include "menu">>
+              <</append>>
+           
+          <<elseif $menuOpen is true>>
+             <<set $menuOpen to false>>
+               <<remove "#menu">>
+          <</if>>
+            
+          <</link>>
+
+    </div>
+  </div>
+  <h2 class="menu-title"> MENU </h2>    
+<h3 class="menu-item"><a href="../games/index.html">Games</a></h3>
+
+<h3 class="menu-item"><a href="../memorial/index.html">Memorial</a></h3>
+ <ul>
+    <li><a href="../memorial/listen.html">Listen</a></li>
+    <li><a href="../memorial/read.html">Read</a></li>
+    <li><a href="../memorial/prerecord.html">Record</a></li>
+    <li><a href="../memorial/submit.html">Submit a written contribution</a></li>
+    </ul>
+<h3 class="menu-item"><a href="../history/index.html">Resources</a></h3>
+<h3 class="menu-item"><a href="../about.html">About</a></h3>
+  <br/>
+<<button "Close Menu">>
+ <<set $menuOpen to false>>
+<<remove "#menu">>
+<</button>>
+</div>
+
+
+
+
+:: headermenu [nobr]
+<header class="general menu" >
+<<if $showMenu is true>>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        <<link [img[../assets/img/menu.png]]>>
+          <<if $menuOpen is false >>
+
+            <<set $menuOpen to true>>
+            <<append "#main">>
+               <<include "menu">>
+              <</append>>
+           
+          <<elseif $menuOpen is true>>
+             <<set $menuOpen to false>>
+               <<remove "#menu">>
+          <</if>>
+            
+          <</link>>
+
+    </div>
+  </div>
+  <</if>>
+</header>
+
+
+:: headerrest [nobr]
+<header class="general" >
+<<if $showMenu is true>>
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        <<link [img[../assets/img/menu.png]]>>
+          <<if $menuOpen is false >>
+
+            <<set $menuOpen to true>>
+            <<append "#main">>
+               <<include "menu">>
+              <</append>>
+           
+          <<elseif $menuOpen is true>>
+             <<set $menuOpen to false>>
+               <<remove "#menu">>
+          <</if>>
+            
+          <</link>>
+
+    </div>
+  </div>
+  <</if>>
+</header>
+
+
+:: footer [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Back|../assets/img/back.png][$prevpass]]
+    </div>
+  </div>
+
+
+<div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Replay|../assets/img/replay.png][$passage]]
+    </div>
+  </div>
+
+<div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Next|../assets/img/for.png][$nextpass]]
+    </div>
+  </div>
+  
+</footer>
+
+:: footerend [nobr]{"position":"100,375","size":"100,100"}
+<footer>
+
+  <div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Back|../assets/img/back.png][$prevpass]]
+    </div>
+  </div>
+
+
+<div class="nav-wrapper">
+    <div class="nav-item">
+        [img[Replay|../assets/img/replay.png][$passage]]
+    </div>
+  </div>
+
+<div class="nav-wrapper">
+
+  </div>
+  
+</footer>
+
+
+
+
+
+
+:: intro [nobr ]
+<<set $prevpass to "intro">>
+<<set $passage to "intro">>
+<<set $nextpass to "intro-highlight">>
+<<set $showLogo to false>>
+<<set $showMenu to false>>
+<<set $menuOpen to false>>
+<audio id="audio" autoplay></audio>
+
+<<if $sound is true>>
+  <<timed 0.1s>>
+    <<replace "#audio">><source  src="../assets/sound/DJIntro.mp3"><</replace>> 
+  <</timed>>
+  <</if>>
+  <<include "header">>
+<main id="main"> 
+ <div class="main-container text">
+   <div id="textMount" class="dj"></div>
+   <<timed 1s>> 
+    <<append "#textMount">>
+      <<type 30ms>>
+  <p>You’re locked into the 188.4FM Experience, and today we are taking you through the events that inspired the founding of this radio station. </p>
+  <</type>>
+  <</append>>
+<</timed>>
+
+<<timed 4s>> 
+    <<append "#textMount">>
+       <<type 30ms>>
+  <p>188.4FM was inspired by the legacy of the 1884 Berlin Conference...</p>
+  <</type>>
+  <</append>>
+<</timed>>
+<<timed 7s>> 
+    <<append "#textMount">>
+       <<type 30ms>>
+  <p>A moment in history that led to a better life on the African continent... </p>
+  <</type>>
+  <</append>>
+<</timed>>
+
+
+<<timed 13s>> 
+    <<append "#textMount">>
+       <<button "Sorry, can you repeat that?">><<goto "intro-highlight">><</button>>
+  <</append>>
+<</timed>>
+   
+ 
+   
+ </div>
+</main>
+<<include "footer">>
+
+
+
+
+:: intro-highlight  [nobr]
+<<set $prevpass to "intro">>
+<<set $passage to "intro-highlight">>
+<<set $nextpass to "broadcast">>
+<<set $menuOpen to false>>
+<<set $showBackwards to true>>
+<<set $showLogo to false>>
+<<include "header">>
+<main id="main"> 
+ <div class="main-container text">
+   <div id="textMount" class="dj"></div>
+
+<<timed 1s>> 
+    <<append "#textMount">>
+      <<type 40ms>>
+<p>Sure. A better life... let me get down some facts:</p>
+<</type>>
+  <</append>>
+<</timed>>
+
+<<timed 4s>> 
+    <<append "#textMount">>
+<<type 40ms>>
+<p>The 1884 Berlin <span class="emph">conference</span> was a moment in history where Europeans tried to come together,</p>
+<</type>>
+  <</append>>
+<</timed>>
+
+<<timed 8s>> 
+    <<append "#textMount">>
+<<type 40ms>>
+<p>with the humanitarian <span class="emph">goal</span> to abolish slavery and colonialism in Africa. </p>
+<</type>>
+  <</append>>
+<</timed>>
+
+
+<<timed 12s>> 
+    <<append "#textMount">>
+      <<type 40ms>>
+<p>Most African <span class="emph">nations</span> chose not to attend the conference. </p>
+<</type>>
+  <</append>>
+<</timed>>
+
+<<timed 16s>> 
+    <<append "#textMount">>
+      <<type 40ms>>
+<p>The conference received a positive <span class="emph">reaction</span> across the African continent. </p>
+<</type>>
+  <</append>>
+<</timed>>
+
+
+<<timed 21s>> 
+    <<append "#textMount">>
+    <<button "Seriously?">><<goto $nextpass>><</button>>
+  <</append>>
+<</timed>>
+
+
+  </div>
+</main>
+<<include "footer">>
+
+
+:: loading [nobr t8n.typewriter.4]
+<main id="main" class="main-section loading">
+<<type 200ms>><h3 class="loading">Loading...</h3><</type>>
+<<timed 6s>>
+<<goto $nextpass>>
+<</timed>>
+</main>
+
+:: broadcast [nobr t8n.typewriter.4]
+<<set $prevpass to "intro-highlight">>
+<<set $passage to "broadcast">>
+<<set $nextpass to "resistance-glitch">>
+<main id="main" class="main-section loading">
+<<type 70ms>><h3 class="loading broadcast">Broadcast from the Resistance</h3><</type>>
+<<timed 6s>>
+<<goto $nextpass>>
+<</timed>>
+</main>
+<<include "footer">>
+
+
+:: resistance-glitch [nobr]
+<<set $prevpass to "intro-highlight">>
+<<set $passage to "resistance-glitch">>
+<<set $nextpass to "resistance-glitch">>
+<<set $menuOpen to false>>
+<<set $showMenu to false>>
+<<include "headerrest">>
+<audio id="audio" autoplay></audio>
+
+<<if $sound is true>>
+  <<timed 0.1s>>
+    <<replace "#audio">><source  src="../assets/sound/ResistanceIntro.mp3"><</replace>> 
+  <</timed>>
+  <</if>>
+<main id="main" class="resistance">
+ <div class="main-container text">
+    <div id="textMount"></div>
+<<timed 1s>> 
+    <<append "#textMount">>
+  <p> “Humanitarian goal?” “Chose not to attend?” We don’t believe it. </p>
+  <</append>>
+<</timed>>
+
+<<timed 4s>> 
+    <<append "#textMount">>
+  <p> We are the resistance, and we call on 188.4FM to speak the truth, or else be dismantled. </p>
+  <</append>>
+<</timed>>
+
+<<timed 7s>> 
+    <<append "#textMount">>
+  <p> Will you help us to uncover the truth?  </p>
+  <</append>>
+<</timed>>
+
+<<timed 9s>> 
+    <<append "#textMount">>
+  <p> The station is about to have you play four activities related to their version of the history, but can you discern fact from fiction?  </p>
+  <</append>>
+<</timed>>
+
+<<timed 12s>> 
+    <<append "#textMount">>
+   <a href="../games/index.html"><button>Play the games</button></a>
+<</append>>
+<</timed>>
+
+
+    
+  </div>
+</main>
+
+<<include "footerend">>
+
+:: resistance-glitch2 [nobr]
+<<set $prevpass to "resistance-glitch">>
+<<set $passage to "resistance-glitch2">>
+<<set $nextpass to "resistance-glitch2">>
+<<set $menuOpen to false>>
+<<set $showMenu to true>>
+
+<<include "headerrest">>
+<audio id="audio" autoplay></audio>
+
+<<if $sound is true>>
+  <<timed 0.1s>>
+    <<replace "#audio">><source  src="../assets/sound/ResistanceIntro.mp3"><</replace>> 
+  <</timed>>
+  <</if>>
+<main id="main" class="resistance">
+ <div class="main-container text">
+    <div id="textMount"></div>
+
+<<timed 0.1s>> 
+    <<replace "#textMount">>
+  <p>Play the games, and then find the truth that is hidden below them.</p>
+  <</replace>>
+<</timed>>
+
+<<timed 3s>> 
+    <<append "#textMount">>
+  <p>At the end, you'll be able to record your own history in a virtual memorial.</p>
+  <</append>>
+<</timed>>
+
+<<timed 5s>> 
+    <<append "#textMount">>
+  <p>And if you’d prefer to learn about history without playing games, we’ve gathered some resources and links for you. 
+</p>
+  <</append>>
+<</timed>>
+
+<<timed 8s>> 
+    <<append "#textMount">>
+       <a href="../games/index.html"><button>Play and debunk history</button></a>
+  
+<br/><br/>
+  <</append>>
+<</timed>>
+
+<<timed 9s>> 
+    <<append "#textMount">>
+   <a href="../memorial/index.html"><button>Visit the memorial directly</button></a>
+<br/><br/>
+  <</append>>
+<</timed>>
+<<timed 10s>> 
+    <<append "#textMount">>
+ <a href="../history/index.html"> <button>Take me to the resources</button></a>
+<br/><br/>
+  <</append>>
+<</timed>>
+    <<timed 12s>> 
+    <<append "#textMount">>
+  <p>You'll be able to visit any of these pages at any time by clicking on the menu icon in the top right corner.</p>
+  <</append>>
+<</timed>>
+  </div>
+</main>
+
+<<include "footerend">>
+
+
